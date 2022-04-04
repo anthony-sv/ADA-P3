@@ -42,7 +42,7 @@
 
 \vspace{0cm}
 
-\centerline{\bf An\'alisis de Algoritmos, Sem: 2022-2, 3CV11, Pr\'actica 3, 30/03/2022}
+\centerline{\bf An\'alisis de Algoritmos, Sem: 2022-2, 3CV11, Pr\'actica 3, 03/04/2022}
 
 \centerline{}
 
@@ -75,7 +75,7 @@ Este documento presenta una comparación de distintos algoritmos que resuelven e
 \\{\bf Palabras Clave:} C++, Iteratividad, Recursividad, Recurrencias
 
 \section{Introducci\'on}
-En la práctica pasada hablamos de lo que era la recursión y la iteración; vimos que los algoritmos pueden expresarse de ambas formas, aunque a veces un problema se puede representar de manera más natural en alguna de las 2 formas, y que a veces varía la complejidad, aunque la complejidad, hasta ahora, solo la hemos podido ver de manera experimental, es decir, a $posteriori$, así que en esta práctica estaremos viendo cómo hacer el análisis a $priori$ de algoritmos recursivos.
+En la práctica pasada hablamos de lo que era la recursión y la iteración; vimos que los algoritmos pueden expresarse de ambas formas, aunque a veces un problema se puede representar de manera más natural en alguna de las 2 formas, y que a veces varía la complejidad, aunque la complejidad, hasta ahora, solo la hemos podido ver de manera experimental, es decir, a $posteriori$, así que en esta práctica estaremos viendo cómo hacer el análisis a $priori$ de algoritmos recursivos, y en general de algoritmos que generen recurrencias.
 \\ Se van a tratar los problemas de la división de 2 números enteros, y también el problema de buscar un número en un arreglo de enteros, vamos a ver diferentes algoritmos para resolver este problema, algunos iterativos, otros recursivos, y haremos una comparación del desempeño que tienen los mismos.
 \section{Conceptos B\'asicos}
 
@@ -85,9 +85,9 @@ Vamos a explorar más a fondo la recursividad. Empezando por checar los elemento
 \newline
 \\ Segundo tenemos los casos base. Estos son instancias de problemas que pueden ser resueltos sin uso alguno de recursión, más aún, sin acarrear llamadas recursivas. El tipo más común generalmente está asociado con las instancias más pequeñas del problema, para el cual resulta resolverlo de manera trivial, a veces no se necesita hacer ningún cálculo. Algunas funciones pueden tener más de un caso base, aunque se debe evitar tener casos base incorrectos, o innecesarios, puesto que son redudantes, esto se da cuando estamos poniendo un caso base, que puede ser calculado mediante el caso recursivo; también esto puede restar generalidad, y esto ocasionaría que nuestra función no estuviera definida en todos los puntos, y podría llevar a errores como exceder el máximo número de llamadas a función permitidas. Y peor aún, no tener un caso base, implicaría tener una recursión infinita, y por tanto nunca pararía, lo que resultaría en el mismo error. Habíamos visto que para poder definir una función recursiva es imperativo escribir un caso base, el cual ayuda a terminar de calcular y parar la recursión.
 \newline
-\\ Tercero tenemos la decomposición del problema. Esto es buscar subproblemas y problemas adicionales; los subproblemas generalmente son similares al problema original pero menores en tamaño. Los subproblemas son ocupados para establecer los casos recursivos. Se puede ver como un proceso que involucra el decrementar el tamaño del problema, y es por eso que es importante determinar correctamente el tamaño del problema. Se suele expresar como una fórmula puesto que es una función matemática.
+\\ Tercero tenemos la descomposición del problema. Esto es buscar subproblemas y problemas adicionales; los subproblemas generalmente son similares al problema original pero menores en tamaño. Los subproblemas son ocupados para establecer los casos recursivos. Se puede ver como un proceso que involucra el decrementar el tamaño del problema, y es por eso que es importante determinar correctamente el tamaño del problema. Se suele expresar como una fórmula puesto que es una función matemática.
 \newline
-\\ Finalmente tenemos los casos recursivos. Definir los casos recursivos, involucra el obtener una forma the construir la solución total del problema original mediante el uso de soluciones de subproblemas similares, que fueron previamente identificados.
+\\ Finalmente tenemos los casos recursivos. Definir los casos recursivos, involucra el obtener una forma de construir la solución total del problema original mediante el uso de soluciones de subproblemas similares, que fueron previamente identificados.
 \\ Para construir un algoritmo recursivo es importante tener en cuenta sus partes, y observar como modificar, extender, o combinar estas soluciones de los suproblemas para poder resolver el problema original.
 \newline
 \\ Los algoritmos recursivos pueden ser divididos en categorías, dependiendo de algunos criterios, es decir, existen tipos de algoritmos recursivos, y pueden estar en diferentes categorías.
@@ -97,7 +97,7 @@ Vamos a explorar más a fondo la recursividad. Empezando por checar los elemento
 \\ También se tiene las recursiones mutuas, se dice que un conjunto de funciones son mutuamente recursivas cuando pueden llamarse entre ellas en un orden cíclico. En otras palabras se puede tener una función $f$ que puede llamar a una función $g$, y a su vez puede llamar a una función $h$, y esta termina mandando a llamar a la función $f$. A este tipo de recursión, también se le conoce como recursión indirecta.
 \\ Finalmente tenemos la recursión Anidada, esta ocurre cuando un argumento de una función recursiva es definida mediante otra llamada recursiva.
 \newline
-\\ Los algoritmos recursivos suelen expresarse mediante relaciones de recurrencia, que son funciones matemáticas recursivas, digamos $T$, que describe su costo computacional. Si un algoritmo depende del tamaño de un parámetro de entrada, digamos $n$, entonces $T$ será una función de $n$. Entonces checamos cuántas operaciones hace en los casos base, y se hace una relación; ahora para el caso recursivo simplemente veremos como modifica el tamaño de problema $n$, y se expresa, de nuevo $T$ como una función de $n$ pero con las modificaciones que se le harán durante cada llamada recursiva. Todo junto representa una función por partes, es decir una función definida por múltiples subfunciones, que representan a la función en diferentes intervalos del Dominio de la función.
+\\ Los algoritmos recursivos suelen expresarse mediante relaciones de recurrencia, que son funciones matemáticas recursivas, digamos $T$, que describe su costo computacional. Si un algoritmo depende del tamaño de un parámetro de entrada, digamos $n$, entonces $T$ será una función de $n$. Entonces checamos cuántas operaciones hace en los casos base, y se hace una relación; ahora para el caso recursivo simplemente veremos como modifica el tamaño de problema $n$, y se expresa, de nuevo $T$ como una función de $n$ pero con las modificaciones que se le harán durante cada llamada recursiva. Todo junto representa una función por partes, es decir una función definida por múltiples subfunciones, que representan a la función en diferentes intervalos del Dominio de la función. Aunque las recurrencias no son propias de los algoritmos recursivos, puesto que un algoritmo iterativo que modifique el tamaño del problema, también puede generar una recurrencia.
 \newpage
 Vamos a ver un ejemplos de relaciones de recurrencia para diferentes algoritmos recursivos de distintas categorías para Fibonacci.
 \newline
@@ -166,7 +166,7 @@ de modo que $F(n)=f(n,0)$.
 \\ Luego tenemos el método de sustitución hacia atrás.
 \\ Este método es el contrario a sustitución hacía delante, aquí se comienza por la recursión original $T(n)$, y se va sustituyendo con el caso recursivo, y así sucesivamente se va sustituyendo hasta que el argumento de la llamada recursiva se convierte en nuestra condición de frontera, de tal manera que podemos observar la función de complejidad temporal hasta ese momento.
 \newline
-\\ Ahora tenemos el método de Recurrencias Lineales de Orden $N$ con coeficiente constantes homogéneas.
+\\ Ahora tenemos el método de Recurrencias Lineales de Orden $N$ con coeficientes constantes homogéneas.
 \\ Este método es el análogo a resolver una ecuación diferencial lineal de orden n, con coeficientes constantes homogénea. Aquí tienen la forma: 
 \\ $a_n=C_1a_{n-1}+C_2a_{n-2}+\dotsm+C_ka_{n-k}$ donde cada $C_i$ es una constante y $C_k$ es diferente de 0; el valor $k$ es llamado el grado de la relación de recurrencia. Esta expresión tiene un polinomio caracterísitico el cual es: 
 \\$r^k=C_1r^{k-1}+C_2r^{k-2}+\dotsm+C_k$, es decir reemplazar $a_i$ con $r^{i-(n-k)}$, ahora debemos calcular las raíces características de la relación de recurrencia, que son las raíces del polinomio caracterísitico.
@@ -181,7 +181,7 @@ de modo que $F(n)=f(n,0)$.
 \[ a_n = \sum_{i=0}^{t} (\alpha_{i,0}+\alpha_{i,1}\cdot n+\dotsb+\alpha_{i,m_{i-1}}\cdot n^{m_i-1})r_i^n  \]
 Finalmente con la condiciones iniciales, armamos un sistema de ecuaciones, y al resolverlo, tendremos los valores para cada $C_i$. Con lo cual tendríamos nuestra función de complejidad.
 \newline
-\\ Ahora tenemos el método de Recurrencias Lineales de Orden $N$ con coeficiente constantes no homogéneas.
+\\ Ahora tenemos el método de Recurrencias Lineales de Orden $N$ con coeficientes constantes no homogéneas.
 \\ Si tenemos una relación de recurrencia lineal de coeficientes constantes como: $a_n=C_1a_{n-1}+C_2a_{n-2}+\dotsm+C_ka_{n-k}+F(n)$, se dice que es no homogénea. La relación de recurrencia que se obtiene al eliminar $F(n)$ se conoce como la relación de recurrencia homogénea asociada. Para resolver recurrencias de este tipo, también recurriremos al análogo en ecuaciones diferenciales del mismo tipo, donde combinaremos la solución de la homogénea, con una solución particular. Para ello usaremos los siguientes teoremas:
 \\ \textbf{Teorema 1.}
 \\ Se supone que $a_n=C_1a_{n-1}+C_2a_{n-2}+\dotsm+C_ka_{n-k}+F(n)$ tiene una solución particular $a_n^p$, y $a_n^h$ es la solución de la recurrencia homogénea asociada. Entonces toda solución tiene la forma: $a_n^p+a_n^h$. Si podemos encontrar una solución particular, entonces, mecánicamente podemos encontrar una solución que satisaface las condiciones iniciales. Se encuentra de la siguiente manera.
@@ -195,7 +195,7 @@ Finalmente con la condiciones iniciales, armamos un sistema de ecuaciones, y al 
 \\ Ahora solo igualamos la forma de la solución particular con nuestra recurrencia, y resolvemos para los $p_i$ acomodando todo para que este igualado a 0. Y esa sería la función de complejidad temporal.
 \newline
 \\ Ahora se presenta el método de árboles de recurrencia.
-\\ Este método ocupa el construir un árbol de sustituir los valores de una recurrencia con la forma $T(n)=aT(n/b)+f(n)$, de tal manera que cada nodo del árbol tendrá $a$ hijos, y los valores de esos nodos serán las $f(n)$ evaluadas en la $T$ de ese nivel. Luego se busca obtener cuál es el nivel del árbol donde solo hay $T(1)$, luego vemos cuántas operaciones realiza por cada nivel, se suman, y así se obtiene la función de complejidad.
+\\ Este método ocupa el construir un árbol de sustituir los valores de una recurrencia con la forma $T(n)=aT(\frac{n}{b})+f(n)$, de tal manera que cada nodo del árbol tendrá $a$ hijos, y los valores de esos nodos serán las $f(n)$ evaluadas en la $T$ de ese nivel. Luego se busca obtener cuál es el nivel del árbol donde solo hay $T(1)$, luego vemos cuántas operaciones realiza por cada nivel, se suman, y así se obtiene la función de complejidad.
 \newline
 \\ Ahora veremos el método heúristico.
 \\ Para ocupar este método se propone una función $f(n)$, la cuál checaremos por medio de inducción matemática si es la complejidad de nuestro algoritmo, en caso contrario, se prueba con otra función y así sucesivamente, de tal modo que se checa a prueba y error.
@@ -361,7 +361,7 @@ Ahora veamos su complejidad temporal a $priori$.
 \begin{figure}[h]
     \vspace{3cm} \hspace{-2cm} \setlength{\unitlength}{1mm}
         \begin{picture}(15,25)(-35,0)
-            \includegraphics[width=10cm,height=5cm]{D1_PR.jpg}
+            \includegraphics[width=10cm,height=5cm]{D1.jpg}
         \end{picture}
     \end{figure}
     \vspace{-0.7cm}
@@ -369,14 +369,16 @@ Ahora veamos su complejidad temporal a $priori$.
         Figura 2. Análisis a $priori$ de Division1
     \end{center}
     \medskip
-Ahora realizaremos el análisis a $posteriori$
+Ya que el peor caso es cuando div vale 1, entonces la recurrencia es del tipo Decremento por 1, por lo tanto es lineal.
+\newline
+\\ Ahora realizaremos el análisis a $posteriori$
 \\ Para el mejor caso:
 \newpage
 \begin{table}[htbp]
     \begin{center}
         \begin{tabular}{|c|c|}
             \hline
-            \textbf{div} & \textbf{\# operaciones} \\
+            \textbf{n} & \textbf{\# operaciones} \\
             \hline \hline
             0 &	4 \\ \hline
             10 & 4 \\ \hline
@@ -415,7 +417,7 @@ Para el peor caso:
     \begin{center}
         \begin{tabular}{|c|c|}
             \hline
-            \textbf{div} & \textbf{\# operaciones} \\
+            \textbf{n} & \textbf{\# operaciones} \\
             \hline \hline
             0 &	4 \\ \hline
             10 & 19 \\ \hline
@@ -466,7 +468,7 @@ Ahora veamos su complejidad temporal a $priori$.
 \begin{figure}[h]
     \vspace{3cm} \hspace{-2cm} \setlength{\unitlength}{1mm}
         \begin{picture}(15,25)(-35,0)
-            \includegraphics[width=10cm,height=5cm]{D2_PR.jpg}
+            \includegraphics[width=10cm,height=5cm]{D2.jpg}
         \end{picture}
     \end{figure}
     \vspace{-0.7cm}
@@ -481,7 +483,7 @@ Ahora realizaremos el análisis a $posteriori$
     \begin{center}
         \begin{tabular}{|c|c|}
             \hline
-            \textbf{div} & \textbf{\# operaciones} \\
+            \textbf{n} & \textbf{\# operaciones} \\
             \hline \hline
             0 &	6 \\ \hline
             10 & 6 \\ \hline
@@ -520,7 +522,7 @@ Para el peor caso:
     \begin{center}
         \begin{tabular}{|c|c|}
             \hline
-            \textbf{div} & \textbf{\# operaciones} \\
+            \textbf{n} & \textbf{\# operaciones} \\
             \hline \hline
             0 &	6 \\ \hline
             10 & 36 \\ \hline
@@ -571,7 +573,7 @@ Ahora veamos su complejidad temporal a $priori$.
 \begin{figure}[h]
     \vspace{3cm} \hspace{-2cm} \setlength{\unitlength}{1mm}
         \begin{picture}(15,25)(-35,0)
-            \includegraphics[width=10cm,height=5cm]{D3_PR.jpg}
+            \includegraphics[width=10cm,height=5cm]{D3.jpg}
         \end{picture}
     \end{figure}
     \vspace{-0.7cm}
@@ -588,7 +590,7 @@ Ya que el peor caso es cuando $div$ vale 1, entonces la recurrencia es del tipo 
     \begin{center}
         \begin{tabular}{|c|c|}
             \hline
-            \textbf{div} & \textbf{\# operaciones} \\
+            \textbf{n} & \textbf{\# operaciones} \\
             \hline \hline
             0 &	2 \\ \hline
             10 & 2 \\ \hline
@@ -627,7 +629,7 @@ Para el peor caso:
     \begin{center}
         \begin{tabular}{|c|c|}
             \hline
-            \textbf{div} & \textbf{\# operaciones} \\
+            \textbf{n} & \textbf{\# operaciones} \\
             \hline \hline
             0 &	2 \\ \hline
             10 & 17 \\ \hline
@@ -681,7 +683,7 @@ Ahora veamos su complejidad temporal a $priori$.
 \begin{figure}[h]
     \vspace{3cm} \hspace{-2cm} \setlength{\unitlength}{1mm}
         \begin{picture}(15,25)(-35,0)
-            \includegraphics[width=10cm,height=5cm]{TSR_PR.jpg}
+            \includegraphics[width=15cm,height=5cm]{TSR.jpg}
         \end{picture}
     \end{figure}
     \vspace{-0.7cm}
@@ -787,7 +789,7 @@ Ahora veamos su complejidad temporal a $priori$.
 \begin{figure}[h]
     \vspace{3cm} \hspace{-2cm} \setlength{\unitlength}{1mm}
         \begin{picture}(15,25)(-35,0)
-            \includegraphics[width=10cm,height=5cm]{TSI_PR.jpg}
+            \includegraphics[width=30cm,height=5cm]{TSI.jpg}
         \end{picture}
     \end{figure}
     \vspace{-0.7cm}
